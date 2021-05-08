@@ -47,10 +47,16 @@ router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(req.body, {
     where: {
-      id: req.paramas.id,
+      id: req.params.id,
     },
   })
-  .then(category => console.log(category)) //do something with the category here. update the data.)
+    .then(category => {
+      return Promise.all([
+        Category.destroy({ where: { id: req.params.id } }),
+        Category.bulkCreate()
+      ]);
+    });
+    
 });
 
 router.delete('/:id', async (req, res) => {
@@ -63,7 +69,7 @@ router.delete('/:id', async (req, res) => {
     });
 
     if (!categoryData) {
-      res.status(404).json({ message: 'No category found with this id!' })
+      res.status(404).json({ message: 'No category found with this id!' });
       return;
     }
 
