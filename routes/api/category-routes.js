@@ -43,19 +43,24 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
-  Category.update(req.body, {
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then(category => {
-      return Promise.all([
-        Category.destroy({ where: { id: req.params.id } }),
-        Category.bulkCreate()
-      ]);
+  try {
+    const categoryData = await Category.update(req.body, {
+      where: {
+        id: req.params.id
+      }
     });
+
+    if (!categoryData) {
+      res.status(404).json({ message: 'No category found with that ID.' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Category updated!' });
+  } catch (error) {
+    res.status(500).json(error);
+  }
     
 });
 
