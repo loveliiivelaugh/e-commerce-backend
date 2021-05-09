@@ -15,7 +15,7 @@ A sample build out of an ecommerce backend. Built using JavaScript, ExpressJS, M
 ![Sceenshot](/assets/images/screenshot3.png)
 ## Demo
 
-![Screencast](https://photos.app.goo.gl/nM3arihF8vAwTVk88)
+[Screencast](https://photos.app.goo.gl/nM3arihF8vAwTVk88)
 ## Installation
 
 `npm i`
